@@ -15,6 +15,27 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v4
 
+      - name: Generate app icon asset catalog
+        run: |
+          mkdir -p Sources/Assets.xcassets/AppIcon.appiconset
+          sips -s format png -z 1024 1024 youtube-icons-design_1080184-224.jpg --out Sources/Assets.xcassets/AppIcon.appiconset/AppIcon.png
+          cat > Sources/Assets.xcassets/AppIcon.appiconset/Contents.json <<'JSON'
+          {
+            "images" : [
+              {
+                "filename" : "AppIcon.png",
+                "idiom" : "universal",
+                "platform" : "ios",
+                "size" : "1024x1024"
+              }
+            ],
+            "info" : {
+              "author" : "xcode",
+              "version" : 1
+            }
+          }
+          JSON
+
       - name: Select Xcode
         run: |
           XCODE_PATH="$(ls -d /Applications/Xcode_*.app /Applications/Xcode.app 2>/dev/null | tail -n 1)"
