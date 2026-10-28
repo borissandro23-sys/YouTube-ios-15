@@ -7,6 +7,7 @@ struct RetroTubeApp: App {
         WindowGroup {
             ContentView()
                 .preferredColorScheme(.dark)
+                .statusBarHidden(true)
         }
     }
 }
