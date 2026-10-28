@@ -1,27 +1,26 @@
 # RetroTube
 
-A small SwiftUI + WebKit client that opens the mobile YouTube website and targets iOS 15.0 or later.
+RetroTube — лёгкий YouTube-клиент для iOS 15+, с полноэкранным интерфейсом и минималистичным дизайном.
 
-> RetroTube is an independent web client, not the official YouTube app and not a modification of its binary. The website, playback, sign-in, and other features remain controlled by YouTube and may change.
+> RetroTube — независимый веб-клиент, а не официальное приложение YouTube и не модификация его бинарного файла. Сайт, воспроизведение видео, вход в аккаунт и другие функции контролируются YouTube и могут изменяться.
 
-## Features
+## Возможности
 
-- Mobile YouTube homepage in `WKWebView`
-- Back, forward, home, reload/stop controls
-- Loading progress indicator
-- iPhone and iPad target
-- Xcode project generated with XcodeGen
-- GitHub Actions workflow that builds an **unsigned IPA artifact**
+- Мобильная версия YouTube внутри `WKWebView`
+- Полноэкранный интерфейс без дополнительных панелей приложения
+- Поддержка iPhone и iPad
+- Генерация проекта Xcode с помощью XcodeGen
+- Сборка unsigned IPA через GitHub Actions
 
-## Project layout
+## Структура проекта
 
-- `Sources/RetroTubeApp.swift` — SwiftUI app and WKWebView wrapper
-- `project.yml` — XcodeGen project configuration (bundle ID and iOS deployment target)
-- `.github/workflows/build.yml` — CI build and IPA packaging
+- `Sources/RetroTubeApp.swift` — приложение SwiftUI и оболочка WKWebView
+- `project.yml` — конфигурация проекта XcodeGen (Bundle ID и минимальная версия iOS)
+- `.github/workflows/build.yml` — CI-сборка и упаковка IPA
 
-## Build locally
+## Локальная сборка
 
-Requirements: macOS, Xcode with iOS SDK, and [XcodeGen](https://github.com/yonaskolb/XcodeGen).
+Требования: macOS, Xcode с iOS SDK и [XcodeGen](https://github.com/yonaskolb/XcodeGen).
 
 ```sh
 brew install xcodegen
@@ -36,7 +35,7 @@ xcodebuild \
   build
 ```
 
-To package the unsigned app after a successful build:
+Чтобы упаковать unsigned-приложение после успешной сборки:
 
 ```sh
 mkdir -p ipa/Payload
@@ -46,13 +45,13 @@ cp -R build/Build/Products/Release-iphoneos/RetroTube.app ipa/Payload/RetroTube.
 
 ## GitHub Actions
 
-A push to `main` or a manual run from **Actions → Build RetroTube IPA → Run workflow** builds the app. Download `RetroTube-unsigned-IPA` from the workflow run's Artifacts section.
+При отправке изменений в ветку `main` или ручном запуске через **Actions → Build RetroTube IPA → Run workflow** выполняется сборка приложения. Скачайте артефакт `RetroTube-unsigned-IPA` в разделе Artifacts соответствующего запуска.
 
-The artifact is unsigned. It is not directly installable on a normal iPhone/iPad until it is signed using an appropriate Apple development signing setup. This workflow does not publish to the App Store.
+Артефакт не подписан. Перед установкой на обычный iPhone или iPad его нужно подписать подходящим способом с использованием Apple Developer signing. Этот workflow не публикует приложение в App Store.
 
-## Important limitations
+## Ограничения
 
-- This is a web wrapper; it does not restore or patch the official YouTube 19.x app.
-- YouTube may change its website, playback requirements, authentication flow, or policies at any time.
-- App Store review may reject a thin website wrapper or an app that does not provide sufficient functionality beyond the website.
-- The first CI run is the real compile check; if it fails, inspect the workflow logs and fix the reported issue.
+- RetroTube — веб-оболочка: она не восстанавливает и не модифицирует официальное приложение YouTube 19.x.
+- YouTube может менять сайт, требования к воспроизведению видео, авторизации и свои правила.
+- App Store может отклонить приложение, которое является простой оболочкой сайта или не добавляет достаточно самостоятельной функциональности.
+- Успешность сборки проверяется запуском GitHub Actions; если сборка завершится ошибкой, изучите логи workflow.
